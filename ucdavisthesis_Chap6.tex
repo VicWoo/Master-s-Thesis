@@ -1,30 +1,30 @@
 \chapter{Conclusion and Future Work}
 \section{Conclusion}
-    We proposed a all in one method to be able to automatically segment rat brain MRI images that not only vary in time, but also with different animal groups where seizures were induced. 
+    We proposed a method to automatically segment rat brain MRI images that not only vary in time, but also with different animal groups where seizures were induced. 
     We showed how the MR images vary significantly between not only the animal groups, but between time as well, especially for the DFP animal group. 
     In total there were 39 different animals used for training each with images at three different time points, day 3, day 7, and day 28. 
     The MR images were also preprocessed in order to facilitate training in the model and data augmentation was applied to double the training data.
     
-    We then trained multiple popular types deep convolutional neural networks like U-net or dilation models and then tested the combination of the two. 
+    We then trained multiple deep convolutional neural networks including U-net, dilation models as well as the combination of the two. 
     We first looked at segmenting single regions within the brain and then applied multi label segmentation. 
-    There were 14 different regions in the rat brain MRI image that needed to be segmented that each vary in size and shape. 
-    Some of the regions also didn't have clear boundaries for segmentation in the MRI image and so would be tough for the model to learn. 
+    There were 14 different regions in the rat brain MR image that needed to be segmented that each vary in size and shape. 
+    Some of the regions also did not have clear boundaries for segmentation in the MR image and so would be tough for the model to learn. 
     
     The experimental results show that the models used overall performed quite well at segmenting the rat brain MRI image. 
-    The model that performed the best was the U-net dilation 3 downsampling layers with an average DSC of 0.812, but followed closely by the U-net dilation 4 downsampling layers and U-net alone. 
-    The model had the most problems with the smaller regions and the regions where there were no clear boundaries to where the segmentation started and ended. 
-    The almost all of the models performed better toward the VEH animal group compared to the other animal groups as that group was the most stable in terms of changes in the rat brain composition as no seizures were induced.
-    Even though the model's highest DSC was 0.812, when presented to experts who segmented the regions, the model performed very well in their eyes.
-    One of the reasons the model didn't perform as well on the DSC was that the data was segmented inconsistently.
-    There were mainly two people who segmented the rat brain MRI images and even though they tried to coordinate to make sure the segmentation results were as consistent as possible, there were still some areas that didn't match up.
+    The model that performed the best was the U-net dilation 3 downsampling layers with an average DC of 0.812, but followed closely by the U-net dilation 4 downsampling layers and U-net alone. 
+    All the models had the most problems with the smaller regions and the regions where there were no clear boundaries to where the segmentation started and ended. 
+    Almost all of the models performed better toward the VEH animal group compared to the other animal groups as that group was the most stable in terms of changes in the rat brain composition as no seizures were induced.
+    Even though the model's highest DC was 0.812, when presented to experts who segmented the regions, the model performed very well in their eyes.
+    One of the reasons the model did not perform as well on the DC was that the data was segmented inconsistently.
+    There were mainly two people who segmented the rat brain MRI images and even though they tried to coordinate to make sure the segmentation results were as consistent as possible, there were still some areas that did not match up.
     This caused the models to have inconsistencies when segmenting the regions, but only happened at the edges of the regions in the z-axis. 
     
 
 \section{Future Work}
-    Here are some of the ways that this work could be extended or improved.
+    Here are some future directions that this work could be extended or improved.
     
 \subsection{More consistent data}
-    If more data was obtained that was more consistent then the models seen here would perform better trained on this data.
+    If more data was obtained that was more consistent then the models may perform better.
     There would be no inconsistencies in the training of the model and the model would be able to segment the regions better.
     
 \subsection{3D models}
@@ -33,6 +33,6 @@
     The only drawback is that they take up lots of space and a sizable GPU is needed to train these networks.
     
 \subsection{Multiple Modalities/Sequences}
-    This paper only focused on MR images taken with the T2 weighted sequencing or imaging modality.
+    This thesis only focused on MR images taken with the T2 weighted sequencing or imaging modality.
     If we were to use multiple different types of image modalities like T1 weighted or Flair then the model would be able to be more robust.
     This is because if in one of the modalities one segmented region is very dark or not easily differentiated from the background, then in another modality that region might be bright or more easily differentiated, thus helping the segmentation of that region in the model.

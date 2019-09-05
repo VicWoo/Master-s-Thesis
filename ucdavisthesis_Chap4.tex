@@ -1,23 +1,18 @@
 \chapter{Data}
-
+    
 \section{Description of Data}
     As explained in Chapter 1 the data that will be used is provided by the Center for Molecular Imaging and are MRI rat brain images over time. 
     The MR images themselves vary between each different rat, but also as seen can vary significantly in each group.
 \subsection{Brain Regions}
     The brain regions that we will segment are shown in in figure ~\ref{fig:segmentation regions}. 
     There are 7 total regions listed in the image. 
-    The only region that is segmented that isn't in the figure is the cerebellum. 
+    One additional region that is segmented that is not in the figure is the cerebellum. 
     Each region will also be separated in to a left and a right side region of the brain except for the medial thalamus. 
     This means that in total our model will segment 14 different regions. 
     Each of these regions are very different where we have some that are quite close to each other, the inner and outer cerebral cortex layers, and others that are all alone, the piriform cortex. 
     There are also very small regions like the medial thalamus and very large regions like the cerebellum to take into account. 
     
-\begin{figure}
-  \centering
-  \includegraphics[width=\linewidth]{segmentation_areas.png}
-  \caption{MRI rat brain segmentation regions relative to the brain. Image provided by Brad Hobson. }
-  \label{fig:segmentation regions}
-\end{figure}
+
 
     
 
@@ -47,11 +42,11 @@
 \end{figure}
 
 \subsubsection{Normalization and Cropping}
-    One of the first things we do to the image is center cropping. 
+    One of the first pre-processing step is center cropping. 
     As shown in the unprocessed MRI image the rat brain is covered with a lot of background pixels unneeded for the model.
     In order to make the model more efficient the images are center cropped and downsampled from 280x200x44 to 128x128x44.
     This helps to emphasize the more important regions and leave out the areas that are not useful for the model. 
-    We also downsample the images to 128x128 in order to be able to have enough space in the gpu to be able to train the model.
+    We also downsample the images to 128x128 in order to be able to have enough memory for the gpu to be able to train the model.
     
     The images are then normalized in order to keep the range of the images the same and decrease the bias in the model. 
     They are normalized by dividing by the max pixel value per MRI volume or 128x128x44 image.
@@ -85,16 +80,16 @@
 \subsection{Data Augmentation}
     Data augmentation is very useful in machine learning tasks. 
     One of the main ways to have a model generalize better is to train the model on a more diverse dataset. 
-    Data Augmentation takes advantage of basic image transforms to "create" new images for the model to train on \cite{articledataAug}. 
+    Data augmentation takes advantage of basic image transforms to "create" new images for the model to train on \cite{articledataAug}. 
     Some examples of basic data augmentation transforms are scale, crop, brightness, rotation, flipping, padding, etc. 
     All of these basic transforms when applied to an image will change the image and when put through the model will allow it to be more robust. 
     Many papers utilize data augmentation in order to increase the robustness and precision of their model ~\cite{NIPS2012_Krizhevsky}, ~\cite{articledataAug}, ~\cite{DBLP:journals/corr/MilletariNA16}, ~\cite{DBLP:journals/corr/RonnebergerFB15}.
-    Other papers though report that data augmentation didn't improve their results significantly or didn't use data augmentation ~\cite{DBLP:journals/corr/HavaeiDWBCBPJL15}, ~\cite{DBLP:journals/corr/abs-1805-10720}. 
+    Other papers though report that data augmentation did not improve their results significantly or did not use data augmentation ~\cite{DBLP:journals/corr/HavaeiDWBCBPJL15}, ~\cite{DBLP:journals/corr/abs-1805-10720}. 
     When it comes to data augmentation for medical images, the methods that do utilize data augmentation only use a certain amount of transformations ~\cite{10.1007/978-3-030-01449-0_16dilatedunet}. 
-    The reason behind this is that medical images are usually taken in a controlled environment where the patient is made to lay in a bed and not move as much as they can. 
-    For this reason, in this paper we only adopt a rotation of 10 degrees, horizontal flip, image shift of 20\%, and a brightness range from 70\% to 100\%.
+    The reason behind this is that medical images are usually taken in a controlled environment where the patient lays on a bed and is told not to move. 
+    For this reason, in this thesis we only adopt a rotation of 10 degrees, horizontal flip, image shift of 20\%, and a brightness range from 70\% to 100\%.
     We implement a small rotation as well as well as a small image shift and horizontal flip because not all images are taken perfectly in the same area every time even though it is a controlled environment. 
-    A brightness range is also implemented because depending on the injected dose the tissue will be brighter or darker compared to the surrounding tissue. 
+    A brightness range is also implemented because depending on the imaging condition the tissue will be brighter or darker compared to the surrounding tissue. 
     Some examples of the data augmented images are shown in figure ~\ref{fig:dataAugImage}. 
     
 
@@ -119,3 +114,12 @@
   \caption{Some examples of the data augmented MRI images. }
   \label{fig:dataAugImage} 
 \end{figure}
+
+\subsection{Image Data}
+    As explained before a total of 40 rats were imaged with a total of 120 MRI images taken. 
+    Due to some problems with imaging only 115 animal scans were available for use within the model. 
+    The data was split between a training set, a validation set, and test set to prevent overfitting in our model. 
+    Since the data is also split between 4 different animal groups the validation and test dataset has one animal from each group to see how each group performs from the model. 
+   Each animal has MR images at three different time points as well and so the validation/test sets consist of 12 different animal MR images while the training dataset consists of 103 animal MR images. 
+    Data augmentation was also utilized as explained before and the dataset was doubled and data augmentation applied to the replicated data. 
+    The training dataset consists of a total of 206 MR images each of size 128x128x44 or 9,064 total 2D 1MR images while the validation and test sets consists of 12 MR images each of size 128x128xx44 or 528 2D MR images. 

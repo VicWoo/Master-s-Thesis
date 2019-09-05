@@ -2,20 +2,22 @@
 
 
 \section{Neural Networks}
+    Neural networks are the most widely used method for many different applications including semantic segmentation. 
     Neural Networks are used to map a non-linear input to an output. 
-    A neural network is made up of its input layer, any number of hidden layers and an output layer \cite{DeepLearning2015}. 
+    A neural network is made up of its input layer, any number of hidden layers and an output layer \cite{DeepLearning2015}.
+    Neural networks are inspired after neurons in the brain \cite{DeepLearning2015}, \cite{Goodfellow-et-al-2016}, \cite{10.1371/journal.pcbi.Neurons}. 
+    Each element within the vector of the input layer can be seen as a "neuron" where each element is interconnected and takes the information before it to make a decision and send it to another "neuron".
+    This makes it so that as the layers go deeper in a neural network, the neurons are able to learn more and more complex things from the previous neurons.
+    \par
     The input layer consists of the input for the task the network is supposed to learn. 
     For example for the image classification and segmentation tasks, usually the input would be the image the network is supposed to classify. 
     The hidden layers can be seen as a function that tries to predict the output. 
     Each hidden layer applies a function to the previous layer; each subsequent hidden layer is able to predict a more complex function.
     The output of the first and hidden layers is a feature map that the model will use in the subsequent layer \cite{Goodfellow-et-al-2016}. 
-    The output layer finally consists of the probabilities associated with the ground truth. 
+    The output layer finally consists of the probabilities associated with the final output 
     For example for image classification the output layer would be associated to a probability for each class, while for semantic segmentation, each pixel would have a probability associated with it for each class. 
     A basic neural network is shown in figure ~\ref{fig_neuralNetwork}. 
-    \par
-    They are inspired after neurons in the brain \cite{DeepLearning2015}, \cite{Goodfellow-et-al-2016}, \cite{10.1371/journal.pcbi.Neurons}. 
-    Each element within the vector of the input layer can be seen as a "neuron" where each element is interconnected and takes the information before it to make a decision and send it to another "neuron". 
-    This makes it so that as the layers go deeper in a neural network, the neurons are able to learn more and more complex things from the previous neurons.
+    
     
 \begin{figure}[tbh]
 \centering
@@ -29,13 +31,15 @@
 
 \subsection{Convolutional Neural Networks}
 Convolutional Neural Networks or CNN's have had huge success with the task of semantic segmentation \cite{Girshick_2014_CVPR}, \cite{Long_2015}. 
-Convolutional Neural Networks are a lot like Neural Networks, but each layer consists of two steps, a linear convolution operation and a nonlinear activation function. 
+Convolutional Neural Networks are one type of Neural Network, but a convolutional layer receives its input from multiple output nodes.
+This allows convolutional neural networks to capture local information. 
 The output of these convolutional layers is a feature map of the previous layer which takes a linear combination of the input to that layer \cite{Lee:2011:ULH:2001269.2001295}.
 This allows for the model to learn complex shapes and use them to get the correct final output. 
-The number of features in the feature map correspond to the different images shown in figure
-~\ref{fig:feature_map}. 
-Figure ~\ref{fig:first_feature} show the output of 24 different filters of the first layer. Figure ~\ref{fig:second_feature} show the output of 100 different filters created from a linear combination of any number of filters in the first layer. 
+The features that the convolutional neural network will learn depend on the task the network is trained for.
+Figure ~\ref{fig:feature_map} shows the feature maps for a convolutional neural network trained on the segmentation of a region in an image. 
+Figure ~\ref{fig:first_feature} show the output of 24 different filters of the first layer of a neural network trained on. Figure ~\ref{fig:second_feature} show the output of 100 different filters created from a linear combination of any number of filters in the first layer. 
 This can be seen as in the first layer the feature maps are straight or curved lines usually, but for the second layer there are also circles or multiple different lines within the feature map.
+The network learned straight or curved lines in the first layer or more complex shapes in the second layer as the network was trained to segment an image.
 It is beneficial to increase the number of filters as we go deeper in the network so that the model can use more combinations of the previous layers features. 
 There is no standard for the exact number of features one should use in a model as it depends on the task and how much the network would have to learn.
 
@@ -53,23 +57,23 @@ There is no standard for the exact number of features one should use in a model 
   \caption{Feature map of second layer in convolutional neural network}
   \label{fig:second_feature}
 \end{subfigure}
-\caption{The feature maps of the first and second layers are shown above. The features of the second layer are a linear combination of the features in the first layer. }
+\caption{This network was trained on the segmentation of an image. The feature maps of the first and second layers are shown above. The features of the second layer are a linear combination of the features in the first layer. }
 \label{fig:feature_map}
 \end{figure}
     
 \subsubsection{Convolution}
-    In deep learning convolution is the element wise multiplication and addition of the image and a kernel. 
+    Convolution is the element wise multiplication and addition of an image and a kernel. 
     Let $L:Z^2 \rightarrow R $ be a discrete function. 
     Let f be a discrete filter of size $(2r+1)^2 $. 
     The convolution operation $*$ can be shown as
 \begin{equation}
- (L * f)(s) = \sum_{m+n=s} L(m)f(n)\label{eq:convolution}
+ (L * f)(s) = \sum_{n+p=s}\sum_{m+p=s} L(m,n)f(p)\label{eq:convolution}
 \end{equation}
     
     An example of this is shown in ~\ref{fig_convolutionOperation}. 
     The input is the image or feature map from a previous layer while the kernel matrix is the weight matrix learned by the model. 
-    Each output pixel or feature map is calculated by the sum of the product of the kernel and appropriate image size and then is moved across the image one pixel at a time. 
-    This movement of the kernel across the image is called the stride and is usually 1 in order to not miss any important features the model might see and get the best performance \cite{pmlr-v15-coates11a}. 
+    Each output pixel or feature map is calculated by the dot product of the kernel and appropriate image patch and then is moved across the image one pixel at a time. 
+    This movement of the kernel across the image is called the stride and is usually 1 in order to not miss any important features that the model might see and get the best performance \cite{pmlr-v15-coates11a}. 
     Usually the kernel used is much smaller than the image in question in order to have sparse connections.
     This leads the model to learn small meaningful features as the output \cite{Goodfellow-et-al-2016}. 
     In convolution layers the kernel matrix is held constant so as to prevent over fitting and ease training. 
@@ -100,10 +104,10 @@ There is no standard for the exact number of features one should use in a model 
 \end{equation}
     
     An example of three different types of dilation are shown in figure ~\ref{fig_dil_convolution}.
-    As the dilation rate increases the receptive field size increases by $(2^{i+2}-1)x(2^{i+2}-1)$ where $i$ corresponds to the dilation factor.
+    As the dilation rate increases the receptive field size increases by $(2^{i+2}-1)$x$(2^{i+2}-1)$ where $i$ corresponds to the dilation factor.
     The dilation can be computed by $2^i$ where $i$ is the dilation factor ranging from 0 to n. 
     Dilated convolutions allow the receptive field size to increase exponentially without losing image resolution.
-    Regular convolutional layers would need to go much deeper in order to get the receptive field size dilated convolutions can have.
+    Regular convolutional layers would need to go much deeper in order to get the receptive field size that dilated convolutions can have.
     
 \begin{figure}[tbh]
 \centering
@@ -116,17 +120,17 @@ There is no standard for the exact number of features one should use in a model 
 
 \subsection{Activation Functions}    
     Neural networks not only need convolutional layers, but activation functions in order do a lot of the tasks we need.
-    This is because without activation functions the model would just be a huge linear model, which while useful isn't able to account for more complex cases.
+    This is because without activation functions the model would just be a huge linear model, which while useful is not able to account for more complex cases.
     Activation functions help to add a non linearity to the neural network to help it learn more complex tasks.
     Many different types of activation functions have been used in the history of neural networks. 
-    The standard was to use $f(x) = tanh(x)$  or sigmoid, $f(x) = 1/(1+e^x)$, as the output function for every layer. 
-    It was later proved that ReLu or Rectified Linear Units actually trained convolutional neural networks several times faster \cite{NIPS2012_Krizhevsky}. 
+    The standard was to use $f(x) = tanh(x)$  or sigmoid, $f(x) = 1/(1+e^{-x})$, as the output function for every layer. 
+    It was later proved that ReLu or Rectified Linear Units actually trained convolutional neural networks several times faster \cite{NIPS2012_Krizhevsky}. ReLu also was proven to approximate all functions dimension n as long as the width of the network was greater than n \cite{NIPS2017_ReLuUniversalTheorem}. 
     ReLu is a nonlinear function defined as $f(x) = max(0, x)$. 
     This simple function allowed for faster training time because the tanh function saturates after a certain point as seen in figure ~\ref{fig:activation}. 
     This means that for values farther from zero the values will barely change. 
     This is fixed with ReLu as it never fully saturates which allows for easier training. 
     ReLu also preserves some of the linearity which allows for easier optimization and better generalization \cite{Goodfellow-et-al-2016}. 
-    This paper uses ReLu activation function for all the convolution layers.
+    This thesis uses ReLu activation function for all the convolution layers.
 
 \begin{figure}
 \centering
@@ -147,13 +151,13 @@ There is no standard for the exact number of features one should use in a model 
 \end{figure}
 
 \subsection{Pooling}
-    Convolutional layers with non linear activation functions aren't enough for models to learn well. 
-    Whenever there are convolutional layers there are also layers that shrink the representation of the convolutional layers \cite{Lee:2011:ULH:2001269.2001295}. 
+    Convolutional layers with non linear activation functions are not enough for models to learn well. 
+    Whenever there are convolutional layers most of the time there are also layers that shrink the representation of the convolutional layers as it greatly helps the model train \cite{Lee:2011:ULH:2001269.2001295}. 
     Pooling just takes a small subsample of the input and combines it into one pixel output. 
     The size of the subsampled input is determined by the filter size of the pooling layer. 
     A 3x3 filter will take 3x3 inputs and output a 1x1. 
     The pooling function would then be applied to the entire output using a sliding window. 
-    This helps pooling layers help model learn spatial invariance as well as reduce the dimensionality of the feature map \cite{Scherer:2010:EPO:1886436.1886447}. 
+    Pooling layers help the model learn spatial invariance as well as reduce the dimensionality of the feature map \cite{Scherer:2010:EPO:1886436.1886447}. 
     Average pooling was widely used in the start of invent of convolutional neural networks \cite{NIPS2012_Krizhevsky}. 
     Average pooling applies the average function to the subsample input and outputs the average of all the pixels. 
     This was used until it was shown that another function, max, was better for learning \cite{Scherer:2010:EPO:1886436.1886447}. 
