@@ -16,7 +16,7 @@
     The output of the first and hidden layers is a feature map that the model will use in the subsequent layer \cite{Goodfellow-et-al-2016}. 
     The output layer finally consists of the probabilities associated with the final output 
     For example for image classification the output layer would be associated to a probability for each class, while for semantic segmentation, each pixel would have a probability associated with it for each class. 
-    A basic neural network is shown in figure ~\ref{fig_neuralNetwork}. 
+    A basic neural network is shown in figure ~\ref{fig_neuralNetwork}. On the right we see the basic outline of the network with the input layer at the bottom with x, the hidden layer represented by h, and the output layer represented by y. Along each arrow is a W or a weight associated with the output of the previous layer. On the left shows a vectorized view of the right where each layer can have multiple elements.
     
     
 \begin{figure}[tbh]
@@ -24,7 +24,7 @@
 \includegraphics[width=\textwidth]{neural_network.png}
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex
-\caption{This is an example of a neural network. On the right we see the basic outline of the network with the input layer at the bottom with x, the hidden layer represented by h, and the output layer represented by y. Along each arrow is a W or a weight associated with the output of the previous layer. On the left shows a vectorized view of the right where each layer can have multiple elements. Image is from \cite{Goodfellow-et-al-2016}.}
+\caption{This is an example of a neural network and its different representations on the left and right side. Image is from \cite{Goodfellow-et-al-2016}.}
 \label{fig_neuralNetwork}
 \end{figure}    
 
@@ -48,16 +48,16 @@ There is no standard for the exact number of features one should use in a model 
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.6\linewidth]{first_layer_features.png}
-  \caption{Feature map of first layer in convolutional neural network}
+  \caption{}
   \label{fig:first_feature}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.6\linewidth]{Second_layer_features.png}
-  \caption{Feature map of second layer in convolutional neural network}
+  \caption{}
   \label{fig:second_feature}
 \end{subfigure}
-\caption{This network was trained on the segmentation of an image. The feature maps of the first and second layers are shown above. The features of the second layer are a linear combination of the features in the first layer. }
+\caption{This network was trained on the segmentation of an image. The feature maps of the first (a) and second (b) layers are shown above. }
 \label{fig:feature_map}
 \end{figure}
     
@@ -103,7 +103,7 @@ There is no standard for the exact number of features one should use in a model 
  L_{i+1} = L_{i*2^i} f \qquad \mbox{for   } i = 0,1,...,n\label{eq:dilatedrate} 
 \end{equation}
     
-    An example of three different types of dilation are shown in figure ~\ref{fig_dil_convolution}.
+    An example of three different types of dilation are shown in figure ~\ref{fig_dil_convolution}. The first image on the left shows a dilation of 1 which corresponds to a dilation factor of 0 and is a normal kernel applied to the input which corresponds to a receptive field size of 3x3. The second image in the middle shows a dilation of 2 or dilation factor of 1 applied to the input and correspondingly a receptive field size of 7x7. The last image on the right shows a dilation of 4 or dilation factor of 2 applied to the input with a receptive field size of 15x15.
     As the dilation rate increases the receptive field size increases by $(2^{i+2}-1)$x$(2^{i+2}-1)$ where $i$ corresponds to the dilation factor.
     The dilation can be computed by $2^i$ where $i$ is the dilation factor ranging from 0 to n. 
     Dilated convolutions allow the receptive field size to increase exponentially without losing image resolution.
@@ -114,7 +114,7 @@ There is no standard for the exact number of features one should use in a model 
 \includegraphics[width=\textwidth]{dilated_convolutions.png}
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex
-\caption{This is an example of how the receptive field size increases with dilation rate. The first image on the left shows a dilation of 1 which corresponds to a dilation factor of 0 and is a normal kernel applied to the input and has a receptive field size of 3x3. The second image shows a dilation of 2 or dilation factor of 1 applied to the input and correspondingly a receptive field size of 7x7. The last image shows a dilation of 4 or dilation factor of 2 applied to the input with a receptive field size of 15x15. Image is from \cite{Yu2016MultiScaleCA}. }
+\caption{This image shows the different types of dilation rates and how it affects the receptive field sizes of a 2D image. Image is from \cite{Yu2016MultiScaleCA}. }
 \label{fig_dil_convolution}
 \end{figure}     
 
@@ -183,7 +183,9 @@ There is no standard for the exact number of features one should use in a model 
     This problem is the internal covariate shift in the network and can be fixed using batch normalization. 
     Batch normalization normalizes each layer in the network for each training batch. 
     Batch normalization is shown in figure ~\ref{fig_batch_norm}. 
-    Using batch normalization helps to reduce the problem of the vanishing or exploding gradient and allows for the use of higher learning rates \cite{DBLP:journals/corr/IoffeS15}. 
+    The input would be a minibatch and the output would be the input normalized using the mini-batch mean and variance while also scaled and shifted. 
+    The batch normalization layers also add parameters for the network to learn, scale and shift.
+    Batch normalization is used to help reduce the problem of the vanishing or exploding gradient and allow for the use of higher learning rates \cite{DBLP:journals/corr/IoffeS15}. 
     This will help models become more stable as well as train faster. 
     The use of batch normalization also helps to regularize the model and prevent overfitting \cite{DBLP:journals/corr/IoffeS15}. 
     Since batch normalization utilizes mini-batches then it will be less useful for batch sizes that are small as the variance in the batches will be greater.
@@ -193,7 +195,7 @@ There is no standard for the exact number of features one should use in a model 
 \includegraphics[width=0.5\textwidth]{batch_norm.png}
 % where an .eps filename suffix will be0 assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex
-\caption{ This is how batch normalization would be implemented in the model. The input would be a minibatch and the output would be the input normalized using the mini-batch mean and variance while also scaled and shifted. The batch normalization layers also add parameters for the network to learn, scale and shift. Image is from \cite{DBLP:journals/corr/IoffeS15}. }
+\caption{ This is how batch normalization would be implemented in the model. Image is from \cite{DBLP:journals/corr/IoffeS15}. }
 \label{fig_batch_norm}
 \end{figure} 
 

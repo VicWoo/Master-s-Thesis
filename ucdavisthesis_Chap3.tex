@@ -11,26 +11,28 @@ This information could be useful when learning semantic segmentation as the segm
 Using the 3D volumes though requires a lot more time and memory to train. 
 We mainly utilize dice coefficient loss in order to train the model.
 
-\section{Deep Convolutional Neural Networks}
-
-\section{Convolutional Neural Network Architecture}
-    We explore several convolutional neural networks in this thesis, mainly focusing on U-net and dilation networks. 
-    We choose to implement U-net and dilation networks because they were previously shown to be the most successful for the task of semantic segmentation, each having their own benefits \cite{DBLP:journals/corr/LongSD14}, \cite{DBLP:journals/corr/RonnebergerFB15}, \cite{Yu2016MultiScaleCA}. 
-    U-net is one of the most popular networks used for medical images and provides excellent results. 
-    Dilation networks or networks with dilated convolutions also have excellent results for the task of semantic segmentation and is widely used. 
+\section{Deep Convolutional Neural Network Architecture}
+We explore several convolutional neural networks in this thesis, mainly focusing on U-net and dilation networks. 
+We choose to implement U-net and dilation networks because they were previously shown to be the most successful for the task of semantic segmentation, each having their own benefits \cite{DBLP:journals/corr/LongSD14}, \cite{DBLP:journals/corr/RonnebergerFB15}, \cite{Yu2016MultiScaleCA}. 
+U-net is one of the most popular networks used for medical images and provides excellent results. 
+Dilation networks or networks with dilated convolutions also have excellent results for the task of semantic segmentation and is widely used. 
 
 \subsection{U-net}
 %
 The U-net architecture has been very successful in semantic segmentation. 
 U-net works very well because it extends the idea of fully convolutional networks like pooling and convolution layers to upsampling and deconvolutional layers \cite{DBLP:journals/corr/RonnebergerFB15}.
 U-net has a base architecture shown in figure ~\ref{fig_Unet}. 
+Each black arrow represents a pooling layer when pointing down or an unsampling layer when pointing up. 
+The skip connections or concatenation layers are represented by gray arrows between the corresponding layers. 
+The filter size is shown as the third dimension in the image size of each block except for the input layer where it corresponds to the image input. 
+There is also batch normalization after each convolution layer.
 It is made up of four downsampling and four upsamplings layers with two convolutional layers in between. 
 The reason that we have the upsampling layers is because we need the output to be a segmentation map of every pixel in the input.
 We use deconvolution layers in order to upsample back to the original image size. 
 The network also doubles the amount of features every time the network downsamples and halves the number of features every time it upsamples. 
 This allows the network to be able to learn more robust contextual information by being able to use more combinations of the features from the previous layer, but also keep the important features as the model upsamples \cite{DBLP:journals/corr/RonnebergerFB15}. 
 The input of the architecture is the image size in this case 256x256x3, but can be any image size as long as it is large enough to go through the downsampling layers.
-For RGB images usually all three of those slices are put into the model for it to learn but with MRI images they are grayscale images and so only one slice is needed. 
+For RGB images usually all three of those slices are put into the model for it to learn but with MRI images they are gray scale images and so only one slice is needed. 
 The total amount of parameters in U-net is around 7 million. 
 The number of parameters is important because that determines how well a model learns. 
 A model with more parameters will take longer to train but will be able to learn more complex connections. 
@@ -52,7 +54,7 @@ They help to not only preserve the shallow data that was lost in the downsamplin
 \includegraphics[width=\textwidth]{Unet_Architecture.png}
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex
-\caption{Unet base architecture with input image 256x256x3. Each black arrow represents a pooling layer when pointing down or an unsampling layer when pointing up. The skip connections are represented by gray arrows or concatenation layers between the corresponding layers. The filter size is shown as the third dimension in the image size of each block except for the input layer where it corresponds to the image input. There is also batch normalization after each convolution layer.}
+\caption{Unet base architecture with input image 256x256x3.}
 \label{fig_Unet}
 \end{figure}
 
@@ -62,7 +64,9 @@ Dilated convolutions are utilized because in order for semantic segmentation to 
 Some of the more popular methods that dilated convolutions are used for is to aggregate multi-scale contextual information  \cite{Yu2016MultiScaleCA}. 
 One of the main ways dilated layers do this is with a contextual block. 
 This contextual block consists of multiple dilated convolutions in order to get the full context of the input layer. 
-An example of the contextual block is shown in figure ~\ref{tab.dilated_context}. 
+An example of the contextual block is shown in figure ~\ref{tab.dilated_context}.
+This contextual block is usually put at the end of the network in order to learn the context from the filters created from the previous network. 
+The receptive field sizes increase not only as the layers increase, but as the dilation increases as well.
 The first two layers have a dilation of 1 or with a dilation factor of 0 so the receptive field size does not increase significantly. 
 The layers with dilation though increase the receptive field size significantly until after layer 6 where the receptive field size becomes 65x65. 
 We can go further and add a 32 dilation and that would bring our receptive field size to 129x129 if needed. 
@@ -91,7 +95,7 @@ Truncation & Yes & Yes & Yes & Yes & Yes & Yes & Yes & No\\
 Receptive field & 3x3 & 5x5 & 9x9 & 17x17 & 33x33 & 65x65 & 67x67 & 69x69\\
 \hline
 \end{tabular}
-\caption{Dilated contextual block. It is made up of multiple dilated convolution layers that slowly grow in dilation size to increase the receptive field size to 67x67. This contextual block is usually put at the end of the network in order to learn the context from the filters created from the previous network. As the layers increase the receptive field size increases as the dilation increases as well. Table is from \cite{Yu2016MultiScaleCA}.}
+\caption{Dilated contextual block. It is made up of multiple dilated convolution layers that slowly grow in dilation size to increase the receptive field size to 69x69. Table is from \cite{Yu2016MultiScaleCA}.}
 \label{tab.dilated_context}
 \end{table}
 

@@ -71,7 +71,7 @@
 \degreeyear     {2019}
 % Indicate the year in which your degree will be officially conferred.
 
-\degreemonth    {June}
+\degreemonth    {December}
 % Indicate the month in which your degree will be officially conferred. Used for UMI abstract.
 
 \committee{Jinyi Qi}{Yong Jae Lee}{Soheil Ghiasi}{}{}
@@ -84,16 +84,50 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\dedication{\textsl{To someone very important \ldots \\
-            a nice dedication.}}
+\dedication{\textsl{I would like to dedicate this thesis to my parents, Jessie and Mohammed Shakouri. They have supported me all my life and without them I would not be where I am now. }}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\abstract{The abstract submitted as part of your dissertation, in the introductory pages, does not have a word limit. It should follow the same format as the rest of your dissertation (1.5 inch left margin, double-spaced, consecutive page numbering, etc.).}
+\abstract{
+\par
+Semantic Segmentation of brain MR images has always been a very time consuming task in the medical industry.
+The automation of semantic segmentation will not only help cut down on the time significantly but help reduce intra-observer and inter-observer variability in the MR images. 
+The main challenge to automate semantic segmentation is the intra-observer and inter-observer variability as this is what causes the segmented regions to be inconsistent which in turn makes it hard to segment. 
+It is also very difficult to get a lot of data for semantic segmentation because it is so time consuming.
+Recent advances in deep convolutional neural networks in semantic segmentation of natural and medical images allows for the mitigation of these challenges. 
+\par
+This thesis will utilize deep convolutional neural networks to automate the semantic segmentation of diseased rat brain MR images that vary over time. 
+The model will take into account not only healthy rats, but rats with seizures induced and rats with seizures induced but given anti-seizure drugs. 
+This complicates the automatic segmentation further as the rat brain images themselves vary significantly between diseased rats and healthy rats and create a spectrum that the model would have to take into account. 
+This thesis will investigate multiple different deep convolutional neural networks that have had success in semantic segmentation and apply them to the rat brain MR images.
+We will first consider single region segmentation results and how well the models perform on the rat brain images in general.
+In the second part of the thesis, the models are applied to semantically segment the MR image into 14 different brain regions.
+\par
+In the experiments, the segmentation results on rat brain MR images is shown as well as the training and validation curve for the corresponding model. 
+The models experimented are U-net, dilated convolution models, and a combination of both at multiple downsampling levels. 
+The experimental results show that the combination of U-net and the dilated models at 3 downsampling layers performed the best with an average dice score of 0.812 from healthy to diseased rats.
+The results also show that automatic segmentation by the deep convolutional neural networks was comparable to the manual segmentation of the rat brain MR images by a trained physician. 
+Further work to use 3D convolutional neural network models or multiple MR modalities as an input would help strengthen the results of the model.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\acknowledgments{Acknowledgements to those who helped you get to this point. They should be listed by chapter when appropriate.}
+\acknowledgments{I would like to express my sincerest gratitude to my major professor Jinyi Qi.
+He is an amazing advisor who consistently tries to help his students in every way possible.
+I really appreciate his patience when going through the experimental results and he always provided essential input for this thesis.
+He really inspired me to try to figure things out on my own, but of course he would be there if I needed help with anything. 
+Thank you so much for everything and I really appreciate everything you have done for me.
+\par
+I would also like to thank everyone else who helped me with writing this paper. 
+I would like to thank my other committee member professors as well, Yong Jae Lee and Soheil Ghiasi for helping me with my research and completing this thesis.
+Thank you so much for being part of my thesis committee and for discussing my research.
+Thank you Brad Hobson and Doug Rowland for helping to provide the rat brain MR images as well as starting this research. 
+I really appreciate how excited you were at this research and for preparing the ground truths for my use.
+\par
+I would finally like to thank everyone in my research group as well: Xuezhu Zhang, Chih-Chieh Liu, Zhaoheng Xie, Reheman Baikejiang, Mengxi Zhang, TianTian Li, and Nimu Yuan. 
+You all helped me feel so welcome in the lab and always were very helpful. 
+I really enjoyed being lab mates with you all and I wish you all the best. 
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -122,12 +156,26 @@
 \bibliography{ucdavisthesis_example}
 
 % The UMI abstract uses square brackets!
-\UMIabstract[The abstract that is submitted to UMI must be formatted as shown in the example here. The body of the abstract cannot exceed 350 words. It should be in typewritten form, double-spaced, and on bond paper. It is important to write an abstract that gives a clear description of the content and major divisions of the dissertation, since UMI will publish the abstract exactly as submitted. Students completing their requirements under Plan A should provide extra copies of the typed summary for use by the dissertation committee during the examination.
-
-The abstract that is submitted to UMI must be formatted as shown in the example here. The body of the abstract cannot exceed 350 words. It should be in typewritten form, double-spaced, and on bond paper. It is important to write an abstract that gives a clear description of the content and major divisions of the dissertation, since UMI will publish the abstract exactly as submitted. Students completing their requirements under Plan A should provide extra copies of the typed summary for use by the dissertation committee during the examination.
-
-The abstract that is submitted to UMI must be formatted as shown in the example here. The body of the abstract cannot exceed 350 words. It should be in typewritten form, double-spaced, and on bond paper. It is important to write an abstract that gives a clear description of the content and major divisions of the dissertation, since UMI will publish the abstract exactly as submitted. Students completing their requirements under Plan A should provide extra copies of the typed summary for use by the dissertation committee during the examination.
-
-The abstract that is submitted to UMI must be formatted as shown in the example here. The body of the abstract cannot exceed 350 words. It should be in typewritten form, double-spaced, and on bond paper. It is important to write an abstract that gives a clear description of the content and major divisions of the dissertation, since UMI will publish the abstract exactly as submitted. Students completing their requirements under Plan A should provide extra copies of the typed summary for use by the dissertation committee during the examination.]
+\UMIabstract[
+\par
+Semantic Segmentation of brain MR images has always been a very time consuming task in the medical industry.
+The automation of semantic segmentation will not only help cut down on the time significantly but help reduce intra-observer and inter-observer variability in the MR images. 
+The main challenge to automate semantic segmentation is the intra-observer and inter-observer variability as this is what causes the segmented regions to be inconsistent which in turn makes it hard to segment. 
+It is also very difficult to get a lot of data for semantic segmentation because it is so time consuming.
+Recent advances in deep convolutional neural networks in semantic segmentation of natural and medical images allows for the mitigation of these challenges. 
+\par
+This thesis will utilize deep convolutional neural networks to automate the semantic segmentation of diseased rat brain MR images that vary over time. 
+The model will take into account not only healthy rats, but rats with seizures induced and rats with seizures induced but given anti-seizure drugs. 
+This complicates the automatic segmentation further as the rat brain images themselves vary significantly between diseased rats and healthy rats and create a spectrum that the model would have to take into account. 
+This thesis will investigate multiple different deep convolutional neural networks that have had success in semantic segmentation and apply them to the rat brain MR images.
+We will first consider single region segmentation results and how well the models perform on the rat brain images in general.
+In the second part of the thesis, the models are applied to semantically segment the MR image into 14 different brain regions.
+\par
+In the experiments, the segmentation results on rat brain MR images is shown as well as the training and validation curve for the corresponding model. 
+The models experimented are U-net, dilated convolution models, and a combination of both at multiple downsampling levels. 
+The experimental results show that the combination of U-net and the dilated models at 3 downsampling layers performed the best with an average dice score of 0.812 from healthy to diseased rats.
+The results also show that automatic segmentation by the deep convolutional neural networks was comparable to the manual segmentation of the rat brain MR images by a trained physician. 
+Further work to use 3D convolutional neural network models or multiple MR modalities as an input would help strengthen the results of the model.
+]
 
 \end{document} 
