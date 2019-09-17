@@ -91,22 +91,20 @@
 \abstract{
 \par
 Semantic Segmentation of brain MR images has always been a very time consuming task in the medical industry.
-The automation of semantic segmentation will not only help cut down on the time significantly but help reduce intra-observer and inter-observer variability in the MR images. 
-The main challenge to automate semantic segmentation is the intra-observer and inter-observer variability as this is what causes the segmented regions to be inconsistent which in turn makes it hard to segment. 
-It is also very difficult to get a lot of data for semantic segmentation because it is so time consuming.
-Recent advances in deep convolutional neural networks in semantic segmentation of natural and medical images allows for the mitigation of these challenges. 
+The automation of semantic segmentation will not only help cut down on the time significantly but help reduce intra-observer and inter-observer variability in the segmentation results. 
+The main challenge to automate semantic segmentation is the lack of sufficient data with the ground truth. Manual segmentation is often treated as the ground truth, but intra-observer and inter-observer variability as render the segmented regions to be inconsistent. 
+It is also very time consuming to preform manual segmentation on a large number of data sets.
+Recent advances in semantic segmentation of natural and medical images like more efficient models and better data augmentation techniques allows for the mitigation of these challenges.
 \par
 This thesis will utilize deep convolutional neural networks to automate the semantic segmentation of diseased rat brain MR images that vary over time. 
 The model will take into account not only healthy rats, but rats with seizures induced and rats with seizures induced but given anti-seizure drugs. 
 This complicates the automatic segmentation further as the rat brain images themselves vary significantly between diseased rats and healthy rats and create a spectrum that the model would have to take into account. 
-This thesis will investigate multiple different deep convolutional neural networks that have had success in semantic segmentation and apply them to the rat brain MR images.
-We will first consider single region segmentation results and how well the models perform on the rat brain images in general.
-In the second part of the thesis, the models are applied to semantically segment the MR image into 14 different brain regions.
+This thesis will investigate multiple deep convolutional neural networks that have had success in semantic segmentation and apply them to the rat brain MR images.
+We will first consider single region segmentation using convolutional neural networks and then the networks are applied to semantically segment the MR image into 14 different brain regions.
 \par
-In the experiments, the segmentation results on rat brain MR images is shown as well as the training and validation curve for the corresponding model. 
 The models experimented are U-net, dilated convolution models, and a combination of both at multiple downsampling levels. 
 The experimental results show that the combination of U-net and the dilated models at 3 downsampling layers performed the best with an average dice score of 0.812 from healthy to diseased rats.
-The results also show that automatic segmentation by the deep convolutional neural networks was comparable to the manual segmentation of the rat brain MR images by a trained physician. 
+The results also show that automatic segmentation by the deep convolutional neural networks was comparable to the manual segmentation of the rat brain MR images by a trained human observer. 
 Further work to use 3D convolutional neural network models or multiple MR modalities as an input would help strengthen the results of the model.
 }
 
@@ -159,22 +157,20 @@ I really enjoyed being lab mates with you all and I wish you all the best.
 \UMIabstract[
 \par
 Semantic Segmentation of brain MR images has always been a very time consuming task in the medical industry.
-The automation of semantic segmentation will not only help cut down on the time significantly but help reduce intra-observer and inter-observer variability in the MR images. 
-The main challenge to automate semantic segmentation is the intra-observer and inter-observer variability as this is what causes the segmented regions to be inconsistent which in turn makes it hard to segment. 
-It is also very difficult to get a lot of data for semantic segmentation because it is so time consuming.
-Recent advances in deep convolutional neural networks in semantic segmentation of natural and medical images allows for the mitigation of these challenges. 
+The automation of semantic segmentation will not only help cut down on the time significantly but help reduce intra-observer and inter-observer variability in the segmentation results. 
+The main challenge to automate semantic segmentation is the lack of sufficient data with the ground truth. Manual segmentation is often treated as the ground truth, but intra-observer and inter-observer variability as render the segmented regions to be inconsistent. 
+It is also very time consuming to preform manual segmentation on a large number of data sets.
+Recent advances in semantic segmentation of natural and medical images like more efficient models and better data augmentation techniques allows for the mitigation of these challenges.
 \par
 This thesis will utilize deep convolutional neural networks to automate the semantic segmentation of diseased rat brain MR images that vary over time. 
 The model will take into account not only healthy rats, but rats with seizures induced and rats with seizures induced but given anti-seizure drugs. 
 This complicates the automatic segmentation further as the rat brain images themselves vary significantly between diseased rats and healthy rats and create a spectrum that the model would have to take into account. 
-This thesis will investigate multiple different deep convolutional neural networks that have had success in semantic segmentation and apply them to the rat brain MR images.
-We will first consider single region segmentation results and how well the models perform on the rat brain images in general.
-In the second part of the thesis, the models are applied to semantically segment the MR image into 14 different brain regions.
+This thesis will investigate multiple deep convolutional neural networks that have had success in semantic segmentation and apply them to the rat brain MR images.
+We will first consider single region segmentation using convolutional neural networks and then the networks are applied to semantically segment the MR image into 14 different brain regions.
 \par
-In the experiments, the segmentation results on rat brain MR images is shown as well as the training and validation curve for the corresponding model. 
 The models experimented are U-net, dilated convolution models, and a combination of both at multiple downsampling levels. 
 The experimental results show that the combination of U-net and the dilated models at 3 downsampling layers performed the best with an average dice score of 0.812 from healthy to diseased rats.
-The results also show that automatic segmentation by the deep convolutional neural networks was comparable to the manual segmentation of the rat brain MR images by a trained physician. 
+The results also show that automatic segmentation by the deep convolutional neural networks was comparable to the manual segmentation of the rat brain MR images by a trained human observer. 
 Further work to use 3D convolutional neural network models or multiple MR modalities as an input would help strengthen the results of the model.
 ]
 
